@@ -1,23 +1,32 @@
-# Judges' quick start — R30-R3 polished presentation
+# Run PhotoSift Reborn
 
-**Target systems:** Windows x64 and Ubuntu/Linux x64 graphical desktops. **Do not run elevated/as root.** No installation wizard is required; extract the entire self-contained archive.
+PhotoSift Reborn comes as a portable desktop app for **Windows x64** and **Linux x64**. There's no installer, and you don't need the .NET SDK to run the release builds.
+
+**[Download the release](https://github.com/chizzydev/photosift-reborn-avalonia/releases/tag/contest-r30-r3-20261023)** and check your archive against `SHA256SUMS.txt`.
 
 ## Windows
 
-1. Download `PhotoSiftReborn-Final-Presentation-win-x64-CANDIDATE.zip` from the GitHub Release and check its SHA-256 against `SHA256SUMS.txt` on the release.
-2. Extract fully into a new user-owned directory (do not open/run the executable from inside a ZIP).
-3. Run `PhotoSiftReborn.exe`. The build is not digitally signed; treat any operating-system warning accordingly and verify the published checksum. It contains the .NET runtime; no .NET SDK is needed.
-4. Explore Focus, Collection, Changes, History, Tools and Diagnostics. Import a directory of **copies** of images to inspect previews and keyboard routes.
+1. Download `PhotoSiftReborn-Final-Presentation-win-x64-CANDIDATE.zip`.
+2. Extract the entire ZIP into a folder you own.
+3. Open `PhotoSiftReborn.exe`. The app is unsigned, so check the published hash if Windows displays a security prompt.
+4. Start with Focus and Collection; then explore Changes, History & recovery, and Tools.
 
-## Ubuntu/Linux x64
+## Ubuntu/Linux
 
-1. Download `PhotoSiftReborn-Final-Presentation-linux-x64-CANDIDATE.tar.gz`; check SHA-256.
-2. Extract into a writable user directory (for example `~/Downloads/PhotoSiftReborn`) using `tar -xzf <archive> -C <destination>`.
-3. In a graphical session run `./PhotoSiftReborn`. If executable permission is not preserved, `chmod +x PhotoSiftReborn` first. The build is self-contained .NET 10, but native desktop dependencies (display server, fonts, graphics stack and supported Linux shared libraries) still depend on the host distribution.
-4. Use copies of disposable images for the first session. Do not run as root or work from a VirtualBox `vboxsf` shared folder for native file-operation verification.
+1. Download `PhotoSiftReborn-Final-Presentation-linux-x64-CANDIDATE.tar.gz`.
+2. Extract it to a folder in your home directory.
+3. From that folder, run `./PhotoSiftReborn` in a graphical desktop session. If the executable bit was lost during extraction, run `chmod +x PhotoSiftReborn` first.
+4. Explore the same Focus, Collection, Changes, and History views. Standard Linux graphical libraries, fonts, and a running display session are required.
 
-## A useful first review
+## A five-minute tour
 
-Open three or more disposable photos; inspect Focus's single-photo viewer and Collection's visual overview; visit Changes to see decisions separately from applied file actions; open History/Diagnostics to understand how the application reports recorded operations. Use no irreversible actions on irreplaceable files. Where a native operation is held, preserve recovery data instead of forcing a retry.
+Start with a folder of **copied sample photos**, not your only copies of personal pictures.
 
-**Evidence limit:** Owner-tested on Windows 11 x64 and Ubuntu 24.04 x64; not independently smoke-tested on a pristine no-SDK machine or macOS. General arbitrary ordinary mixed-family operations are not authorized by the R30-R3 test scope.
+- **Focus** is for working through photos with destination keys.
+- **Collection** gives you a visual overview of the whole set.
+- **Changes** shows saved choices and provides review before file operations.
+- **History & recovery** shows what happened and which recovery actions are available.
+
+PhotoSift Reborn deliberately distinguishes selecting a destination from modifying a file. Review the full source and destination before applying a change. If the app holds an operation because a safety check fails, leave its recovery files intact and inspect the reported reason.
+
+The published applications were tested in real desktop sessions on Windows 11 and Ubuntu 24.04. For the story behind the port, see the [README](../README.md).

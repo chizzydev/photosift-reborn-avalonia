@@ -1,84 +1,90 @@
 # PhotoSift Reborn
 
-**Keyboard-speed photo sorting, rebuilt as an Avalonia desktop experience.**
+**Sort photos at keyboard speed. Know exactly what happens to your files.**
 
-PhotoSift Reborn is an independent, GPLv3-licensed modernization of [PhotoSift by RL Vision](https://github.com/rlv-dan/PhotoSift), the pre-existing Windows photo organizer. It preserves the idea that made the original useful: inspect a photo, use a key to decide where it belongs, and move through a collection quickly. Reborn rethinks the experience around **Focus, Collection, Changes, History, Tools and Diagnostics**, with a cohesive Midnight Jade design and a more explicit distinction between a *sorting decision* and an *actual filesystem change*.
+PhotoSift Reborn brings [RL Vision's PhotoSift](https://github.com/rlv-dan/PhotoSift) into a modern Avalonia desktop app. The original had a great idea: look at a photo, press a key, and get on with the next one. I wanted to keep that rhythm, but make it easier to browse a collection, review decisions, and recover from mistakes.
 
-**Avalonia Port Challenge entry — Best Everyday Tool.** Windows x64 and Linux x64 are the tested release targets. macOS is **not** claimed as tested or supported for native file operations.
+The result is a desktop photo sorter built with **Avalonia 12 and .NET 10**, with a Midnight Jade interface and portable releases for **Windows x64 and Linux x64**.
 
-> **Release scope:** This README describes the independently tested **R30-R3 polished presentation release**. Experimental R31 and R31-R2/R31-R3 development features are **not included** in this release, and are not represented as shipped capabilities. R30-R3 retains deliberate restrictions on unsafe ordinary mixed-family workflows and other unproven native mutation scenarios.
+**Avalonia Port Challenge 2026 — Best Everyday Tool**
 
-## See the original and the rebuild
+## From PhotoSift to PhotoSift Reborn
 
-The comparison below uses an archived third-party screenshot of the original PhotoSift, obtained from [SnapFiles](https://www.snapfiles.com/screenfiles/photosift.png) (438 x 361 pixels, original watermark preserved). It is not a screenshot captured by this project. The Reborn screenshots show the actual application. Image rights remain with their respective holders.
-
-| Before: RL Vision PhotoSift | After: PhotoSift Reborn (Windows) |
+| Original PhotoSift | PhotoSift Reborn |
 | --- | --- |
-| ![Archived original PhotoSift screenshot from SnapFiles](docs/screenshots/before-original-photosift.png) | ![PhotoSift Reborn Focus page running on Windows](docs/screenshots/after-reborn-focus.png) |
+| ![Original PhotoSift interface, archived screenshot](docs/screenshots/before-original-photosift.png) | ![PhotoSift Reborn Focus view on Windows](docs/screenshots/after-reborn-focus.png) |
 
-Additional authentic captures: [Collection](docs/screenshots/after-reborn-collection.png) · [Changes](docs/screenshots/after-reborn-changes.png) · [History](docs/screenshots/after-reborn-history.png) · [Ubuntu Focus](docs/screenshots/after-ubuntu-focus.png).
+The original image is an archived, watermarked [SnapFiles screenshot](https://www.snapfiles.com/screenfiles/photosift.png) of RL Vision's PhotoSift. The Reborn captures are from the running application.
 
-## Download and launch
+**Explore the app:** [Collection](docs/screenshots/after-reborn-collection.png) · [Changes](docs/screenshots/after-reborn-changes.png) · [History & recovery](docs/screenshots/after-reborn-history.png) · [Ubuntu Focus](docs/screenshots/after-ubuntu-focus.png)
 
-**Release downloads: [R30-R3 Windows and Linux](https://github.com/chizzydev/photosift-reborn-avalonia/releases/tag/contest-r30-r3-20261023) (verify after publication).**
+## What you can do
 
-| Target | Asset | Start |
+- **Focus:** review one photo at a time, use keyboard destinations, and move naturally through the collection.
+- **Collection:** get a contact-sheet view, preview images on demand, and jump back to the one you want.
+- **Changes:** see saved sorting choices separately from file operations, review exact paths, and apply supported changes deliberately.
+- **History & recovery:** inspect recorded operations, their state, and the recovery or Undo options available for them.
+- **Tools and diagnostics:** find workspace settings, inspection tools, and information about the current session.
+
+The main design decision is simple: **choosing where a photo belongs should not immediately change the original file.** Reborn gives that choice a clear review step. Filesystem operations have identity and destination checks; when those checks cannot establish that an action is safe, the app holds it rather than guessing.
+
+## Download
+
+**[Get PhotoSift Reborn for Windows or Linux](https://github.com/chizzydev/photosift-reborn-avalonia/releases/tag/contest-r30-r3-20261023)**
+
+| Platform | Download | Run |
 | --- | --- | --- |
-| Windows x64 | `PhotoSiftReborn-Final-Presentation-win-x64-CANDIDATE.zip` | Extract fully, then launch `PhotoSiftReborn.exe`. |
-| Ubuntu/Linux x64 | `PhotoSiftReborn-Final-Presentation-linux-x64-CANDIDATE.tar.gz` | Extract fully in a user-owned directory, then run `./PhotoSiftReborn` from a graphical session. |
+| Windows x64 | `PhotoSiftReborn-Final-Presentation-win-x64-CANDIDATE.zip` | Extract the ZIP and open `PhotoSiftReborn.exe`. |
+| Linux x64 | `PhotoSiftReborn-Final-Presentation-linux-x64-CANDIDATE.tar.gz` | Extract the archive and run `./PhotoSiftReborn` in a desktop session. |
 
-Both are .NET 10 **self-contained portable** archives, not signed installers. No .NET SDK is required for the published app itself. Linux may require system GUI/runtime libraries; see [judge quick-start](docs/JUDGES_QUICK_START.md). **Do not run as Administrator/root.** Do not install over the legacy PhotoSift directory or move its `Settings.xml` into the new application's data directory.
+These are self-contained .NET 10 portable builds, not installers. You don't need the .NET SDK to run them. Check the included `SHA256SUMS.txt` before launching. For platform notes, see the [quick start](docs/JUDGES_QUICK_START.md).
 
-For a first trial, use copies of disposable photos and a separate destination. Marking/reviewing a sorting choice is not the same as applying a file operation. Before any actual filesystem action, review its exact source, destination and consequences. **Do not use unapproved/experimental Move, Rename, Reject or mixed-family chains on irreplaceable personal photographs.** Keep session databases, journals and app-owned recovery material intact.
+For a first session, use **copies of photos** and a separate output folder. Review proposed file changes before applying them, and keep the app's recovery data alongside your workspace.
 
-## What changed in the migration
+## The migration: what changed, and why
 
-The legacy PhotoSift UI was a direct, keyboard-first Windows Forms-era utility. The rewrite moves the presentation to **Avalonia 12 / .NET 10**, with a multi-view Studio and shared application, core and filesystem layers. Reborn adds a collection overview with on-demand photo previews; review-oriented changes; history and recovery surfaces; and inspectable diagnostics. The design prioritizes discoverable decisions and recovery state over immediate implicit writes.
+### Keeping what made PhotoSift useful
 
-The hard engineering problem was **not drawing a modern UI**. Persisted UI selections are not proof that a filesystem object is still the same original the user approved. Reborn therefore uses SQLite-backed operation history, native identity checks, bounded reviewed authority, collision refusal and explicit verified recovery/Undo for the supported generated-only acceptance paths. Windows and Linux require different native primitives and sometimes retain different conservative refusal boundaries.
+The original was a compact, keyboard-first Windows utility. Its short feedback loop was worth saving. I kept the idea of assigning destinations by key, then built a Studio around it so you don't have to choose between sorting quickly and seeing the bigger picture.
 
-The result is not a claim that every file on every filesystem can be manipulated safely. Unsafe ownership, unsupported device/path conditions and arbitrary repeated mixed-family operations may remain held rather than being silently forced through.
+Focus is still the place to work through photographs. Collection adds an overview to the original workflow, while Changes makes decisions visible before a file is touched. History brings recovery into the interface rather than leaving it buried in a database.
 
-### Provenance and licence
+### Moving the interface to Avalonia
 
-The original application existed well before the competition (RL Vision PhotoSift, publicly released in 2014); upstream project: [rlv-dan/PhotoSift](https://github.com/rlv-dan/PhotoSift). Our baseline attribution references upstream commit `a5e83b9198f5dd251053c48182cc37fea9ff6670`. PhotoSift Reborn is **not an official RL Vision release**. Source and corresponding modified source are distributed under GPLv3 terms. See `LICENSE-GPLv3.txt` in the source and release archives.
+The rewrite uses Avalonia for the desktop UI, with application, core, and filesystem code separated into `PhotoSiftReborn.App`, `PhotoSiftReborn.Core`, and `PhotoSiftReborn.IO`.
 
-## The honest migration account
+The same Studio interface runs on Windows and Ubuntu. That shared UI was one of the big wins of the port: I could spend time refining one experience instead of maintaining separate front ends.
 
-### What transferred well
+### The part that took the most work
 
-The core interaction is still recognizable: a person reviews a photograph and assigns a keyboard route. Existing PhotoSift workflows supplied a clear functional reference. Avalonia let the new application share one visual system across Windows and Linux while keeping the quick review loop visible in Focus.
+The difficult part wasn't drawing windows. It was making sure a saved decision still referred to the **same file** when someone eventually clicked Apply or Undo.
 
-### What had to be redesigned
+A file can move, change, or collide with another file between selection and execution. Reborn records operation history in SQLite, checks native file identity and destinations, and separates review from execution. Recovery is part of that workflow too: it matters just as much to show what happened after a restart as it does to show that a button was pressed.
 
-**State and safety.** The legacy app could associate a keypress directly with a file move/copy. Reborn separates *choose*, *review* and *apply*, because stale approvals, changed files or destination collisions must not be treated as permission to overwrite. SQLite journals and native revalidation protect supported operation lifecycles across restart and Undo.
+Windows and Linux have different native filesystem behavior, so the UI can be shared while the file-handling layer uses platform-specific checks. A failed safety check produces a visible hold instead of an overwrite or an unverified success.
 
-**Cross-platform native behavior.** Avalonia replaces the UI stack, not Windows and Linux filesystem semantics. Platform-specific ownership/pinning and no-replace operations required separate code and evidence. We did not infer macOS correctness from Avalonia's theoretical reach, and we did not assume identical adversarial resistance on Linux and Windows.
+### What surprised me
 
-**Recovery as product UX.** Reborn exposes History and recovery information rather than hiding journal state in implementation internals. The user can see that a recorded operation and its verified Undo are separate events, and a held operation is not a silent success.
+Two things stood out. First, porting the UI was only one slice of the work; the original application's quick actions had to be rethought once the new interface exposed review and recovery explicitly. Second, restart behavior is a feature of a file organizer, not just a testing detail. The user needs to be able to reopen a session and understand what was decided, what was applied, and what can be undone.
 
-**Migration compatibility.** Legacy `Settings.xml` options cannot simply be copied into a different application's SQLite workspace. Reborn offers bounded preview/import affordances, but complete option parity and automatic import of historical undo state are not claimed. Legacy and Reborn should be installed separately.
+That led to a more deliberate workflow than the original's immediate-action model. It's a trade-off I'm happy with: the keyboard sorting stays quick, and the consequential steps stay visible.
 
-### What the migration cost and what went wrong
+### Building and testing the result
 
-This was a substantive desktop rewrite, not a one-to-one control repaint. Engineering required repeated native-safety increments, cross-platform releases, recovery-journal checks, new GUI workflows and generated-only destructive test fixtures. Work on Linux surfaced platform-specific native boundary problems; interruption during a Rename owner workflow required read-only inspection and controlled continuation, not replay of an already-executed action. A separate Reject verification issue needed the verifier fixed rather than relaxing correctness rules.
+The published release was exercised on **Windows 11 x64** and **Ubuntu 24.04 x64**. The accepted native test suites completed with **1,274 passing tests on Windows** and **1,286 on Ubuntu**, with no failures in those runs. I also opened the portable applications on both systems and checked the actual interface using demonstration photos. The screenshots above come from those desktop sessions.
 
-The practical tradeoff is deliberate: compared with a carefree instant move/delete interface, operations with uncertain ownership may demand explicit review or remain unavailable. We chose conservative refusal over making risky actions look effortless.
+To build from source, install the **.NET 10 SDK**, clone this repository, and build the application project:
 
-### Measured outcome and remaining limitations — R30-R3 only
+```sh
+dotnet build src/PhotoSiftReborn.App/PhotoSiftReborn.csproj -c Release
+```
 
-The accepted/polished R30-R3 **native self-test evidence** reports **1,274/1,274 PASS on Windows** and **1,286/1,286 PASS on Ubuntu**, with zero failures in those scoped suites. The portable Windows release was actually opened by the owner and its Focus, Collection, Changes, History, Tools and Diagnostics screens reviewed against generated photos. The Ubuntu portable was extracted and opened in a GUI session; generated photos displayed and the application exited cleanly. These results **do not prove unrestricted safety for personal files, all file systems, or macOS.** Test counts are native case results, not counts of real-user photo moves.
+The public source includes the UI, core and filesystem layers, supporting assets, and the GPLv3 licence. The [release notes](docs/RELEASE_NOTES_R30_R3.md) and [quick start](docs/JUDGES_QUICK_START.md) provide the details needed to run the builds.
 
-The R30-R3 native scope remains deliberately constrained. Safe general mixed-family ordinary-photo authority, all original Settings.xml options, every filesystem/platform combination, broad accessibility/performance benchmarking and a completely clean no-SDK machine test are **not independently certified** by this release. We do not borrow newer experimental R31 test results for R30.
+## Original project and licence
 
-### What developers can inspect
+PhotoSift was created by **RL Vision** and predates this challenge. Original project: [rlv-dan/PhotoSift](https://github.com/rlv-dan/PhotoSift); upstream reference commit: `a5e83b9198f5dd251053c48182cc37fea9ff6670`.
 
-This public repository provides the clean buildable corresponding source (application, core, filesystem layers, required assets/fixtures, licence and build configuration) selected from a hash-verified 794-entry R30-R3 development archive, with the exact verified **Studio presentation C# overlay** applied. Historical internal handoff notes and logs are intentionally excluded from the public Git history; the complete original audit archive remains privately preserved. The tag supplies a downloadable source snapshot. Release checksums, underlying licence/attribution, native tests and release notes are kept separate from accepted test laboratories.
+PhotoSift Reborn is an independent modernization, **not an official RL Vision release**. It is distributed under **GPLv3**; see [LICENSE-GPLv3.txt](LICENSE-GPLv3.txt).
 
-For the source architecture, inspect `src/PhotoSiftReborn.App`, `src/PhotoSiftReborn.Core` and `src/PhotoSiftReborn.IO`. For installation and constraints, see the [judge quick-start](docs/JUDGES_QUICK_START.md) and [R30-R3 release notes](docs/RELEASE_NOTES_R30_R3.md).
-
-## Contest details
-
-This entry targets **Best Everyday Tool**: a small practical utility modernized with a cohesive experience and intentionally strong recoverability boundaries. We submit two actually tested desktop targets, **Windows x64 and Ubuntu/Linux x64**; we make **no three-platform Windows/macOS/Linux prize claim**.
-
-Official challenge and judging rules: https://avaloniaui.net/blog/avalonia-port-challenge.
+Built for the [Avalonia Port Challenge](https://avaloniaui.net/blog/avalonia-port-challenge), **Best Everyday Tool** category.

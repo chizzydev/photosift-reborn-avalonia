@@ -12,9 +12,9 @@ The result is a desktop photo sorter built with **Avalonia 12 and .NET 10**, wit
 
 | Original PhotoSift | PhotoSift Reborn |
 | --- | --- |
-| ![Original PhotoSift interface, archived screenshot](docs/screenshots/before-original-photosift.png) | ![PhotoSift Reborn Focus view on Windows](docs/screenshots/after-reborn-focus.png) |
+| ![Original PhotoSift running on Windows, owner-captured](docs/screenshots/before-original-photosift.png) | ![PhotoSift Reborn Focus view on Windows](docs/screenshots/after-reborn-focus.png) |
 
-The original image is an archived, watermarked [SnapFiles screenshot](https://www.snapfiles.com/screenfiles/photosift.png) of RL Vision's PhotoSift. The Reborn captures are from the running application.
+The original PhotoSift screenshot was captured directly from RL Vision's application on Windows on October 23, 2026. The Reborn screenshots were also taken from running desktop builds.
 
 **Explore the app:** [Collection](docs/screenshots/after-reborn-collection.png) · [Changes](docs/screenshots/after-reborn-changes.png) · [History & recovery](docs/screenshots/after-reborn-history.png) · [Ubuntu Focus](docs/screenshots/after-ubuntu-focus.png)
 

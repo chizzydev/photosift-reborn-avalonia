@@ -1,0 +1,89 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="PhotoSiftReborn.App"
+             RequestedThemeVariant="Dark">
+  <!-- Studio / Midnight Jade. Semantic tokens, with native Fluent focus and UIA. -->
+  <Application.Resources>
+    <SolidColorBrush x:Key="StudioShell" Color="#0F1923" />
+    <SolidColorBrush x:Key="StudioSurface" Color="#172635" />
+    <SolidColorBrush x:Key="StudioPhotoBed" Color="#101315" />
+    <SolidColorBrush x:Key="StudioText" Color="#F3F6F8" />
+    <SolidColorBrush x:Key="StudioSecondary" Color="#B8C6D1" />
+    <SolidColorBrush x:Key="StudioJade" Color="#71D5C5" />
+    <SolidColorBrush x:Key="StudioJadeInk" Color="#0D1B24" />
+    <SolidColorBrush x:Key="StudioHover" Color="#263C4E" />
+    <SolidColorBrush x:Key="StudioStroke" Color="#728A9D" />
+    <SolidColorBrush x:Key="StudioFocus" Color="#91E4D5" />
+    <SolidColorBrush x:Key="StudioDisabledSurface" Color="#243747" />
+    <SolidColorBrush x:Key="StudioDisabledText" Color="#AABAC7" />
+  </Application.Resources>
+  <Application.Styles>
+    <FluentTheme />
+    <!-- Keep standard Avalonia templates and input/focus semantics. These
+         intentionally theme ordinary historical commands, not only new tabs. -->
+    <Style Selector="Button">
+      <Setter Property="Foreground" Value="{StaticResource StudioText}" />
+      <Setter Property="Background" Value="{StaticResource StudioSurface}" />
+      <Setter Property="BorderBrush" Value="{StaticResource StudioStroke}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="6" />
+      <Setter Property="MinHeight" Value="40" />
+      <Setter Property="Padding" Value="12,7" />
+    </Style>
+    <Style Selector="Button:pointerover">
+      <Setter Property="Background" Value="{StaticResource StudioHover}" />
+    </Style>
+    <Style Selector="Button:disabled">
+      <Setter Property="Foreground" Value="{StaticResource StudioDisabledText}" />
+      <Setter Property="Background" Value="{StaticResource StudioDisabledSurface}" />
+    </Style>
+    <Style Selector="Button.studio-primary">
+      <Setter Property="Background" Value="{StaticResource StudioJade}" />
+      <Setter Property="Foreground" Value="{StaticResource StudioJadeInk}" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.studio-primary:pointerover">
+      <Setter Property="Background" Value="#8AE3D4" />
+      <Setter Property="Foreground" Value="{StaticResource StudioJadeInk}" />
+    </Style>
+    <Style Selector="Button.studio-primary:disabled">
+      <Setter Property="Foreground" Value="{StaticResource StudioDisabledText}" />
+      <Setter Property="Background" Value="{StaticResource StudioDisabledSurface}" />
+    </Style>
+    <Style Selector="Button.studio-nav">
+      <Setter Property="Background" Value="{StaticResource StudioShell}" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <Style Selector="Button.studio-nav:pointerover">
+      <Setter Property="Background" Value="{StaticResource StudioHover}" />
+    </Style>
+    <!-- Active page is a navigation state, NOT the filled jade CTA. The
+         previous shared 'studio-primary' class made selected text dark on
+         the navy shell (invisible except when pointer hovered). -->
+    <Style Selector="Button.studio-nav.studio-current">
+      <Setter Property="Background" Value="{StaticResource StudioSurface}" />
+      <Setter Property="Foreground" Value="{StaticResource StudioJade}" />
+      <Setter Property="BorderThickness" Value="0,0,0,2" />
+      <Setter Property="BorderBrush" Value="{StaticResource StudioJade}" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.studio-nav.studio-current:pointerover">
+      <Setter Property="Background" Value="{StaticResource StudioHover}" />
+      <Setter Property="Foreground" Value="{StaticResource StudioJade}" />
+    </Style>
+    <Style Selector="TextBox">
+      <Setter Property="Background" Value="{StaticResource StudioShell}" />
+      <Setter Property="Foreground" Value="{StaticResource StudioText}" />
+      <Setter Property="BorderBrush" Value="{StaticResource StudioStroke}" />
+    </Style>
+    <Style Selector="ListBox">
+      <Setter Property="Background" Value="{StaticResource StudioShell}" />
+      <Setter Property="Foreground" Value="{StaticResource StudioText}" />
+      <Setter Property="BorderBrush" Value="{StaticResource StudioStroke}" />
+    </Style>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Foreground" Value="{StaticResource StudioText}" />
+    </Style>
+  </Application.Styles>
+</Application>

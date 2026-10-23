@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <KeyFolder_P>Family/Holidays</KeyFolder_P>
+  <KeyFolder_X>C:\Imported\ForeignPhotos</KeyFolder_X>
+  <ExistingFiles>AppendNumber</ExistingFiles>
+  <FileMode>Move</FileMode>
+  <DeleteMode>RecycleBin</DeleteMode>
+  <TargetFolder>C:\LegacyOutput</TargetFolder>
+  <ColorTransparentLabels>true</ColorTransparentLabels>
+</AppSettings>
